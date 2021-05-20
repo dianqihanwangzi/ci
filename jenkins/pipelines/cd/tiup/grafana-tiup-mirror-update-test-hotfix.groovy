@@ -129,7 +129,7 @@ node("build_go1130") {
                 tag = "master"
             }
             if (tag == "master" || tag > "v4") {
-                checkoutTiCS(tag)
+                checkoutTiCS(RELEASE_BRANCH)
             }
         }
         
