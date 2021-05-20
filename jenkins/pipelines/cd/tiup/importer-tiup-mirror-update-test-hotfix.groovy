@@ -3,6 +3,13 @@ def desc = ""
 
 def tiflash_sha1, tarball_name, dir_name
 
+def get_hash = { hash_or_branch, repo ->
+    if (hash_or_branch.length() == 40) {
+        return hash_or_branch
+    }
+    return sh(returnStdout: true, script: "python gethash.py -repo=${repo} -version=${hash_or_branch} -s=${FILE_SERVER_URL}").trim()
+}
+
 def download = { name, version, os, arch ->
     if (os == "linux") {
         platform = "centos7"
@@ -101,7 +108,7 @@ try {
                         TIDB_VERSION = HOTFIX_TAG
                     }
 
-                    importer_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=importer -version=${ORIGIN_TAG} -s=${FILE_SERVER_URL}").trim()
+                    importer_sha1 = get_hash(ORIGIN_TAG,"importer")
                 }
                 if (ARCH_X86) {
                     stage("tiup release tikv-importer linux amd64") {

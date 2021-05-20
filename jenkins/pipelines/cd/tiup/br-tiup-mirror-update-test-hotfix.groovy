@@ -9,6 +9,13 @@ def br_desc = "TiDB/TiKV cluster backup restore tool"
 
 def br_sha1, tarball_name, dir_name
 
+def get_hash = { hash_or_branch, repo ->
+    if (hash_or_branch.length() == 40) {
+        return hash_or_branch
+    }
+    return sh(returnStdout: true, script: "python gethash.py -repo=${repo} -version=${hash_or_branch} -s=${FILE_SERVER_URL}").trim()
+}
+
 def download = { name, version, os, arch ->
     if (os == "linux") {
         platform = "centos7"
@@ -99,10 +106,10 @@ node("build_go1130") {
                 if (HOTFIX_TAG == "nightly") {
                     tag = "master"
                 } else {
-                    tag = ORIGIN_TAG
+                    tag = HOTFIX_TAG
                 }
 
-                br_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=br -version=${ORIGIN_TAG} -s=${FILE_SERVER_URL}").trim()
+                br_sha1 = get_hash(ORIGIN_TAG,"br")
             }
 
             if (ARCH_X86) {

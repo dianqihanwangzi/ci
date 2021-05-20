@@ -3,6 +3,13 @@ def desc = "TiDB Lightning is a tool used for fast full import of large amounts 
 
 def tiflash_sha1, tarball_name, dir_name
 
+def get_hash = { hash_or_branch, repo ->
+    if (hash_or_branch.length() == 40) {
+        return hash_or_branch
+    }
+    return sh(returnStdout: true, script: "python gethash.py -repo=${repo} -version=${hash_or_branch} -s=${FILE_SERVER_URL}").trim()
+}
+
 def download = { name, version, os, arch ->
     if (os == "linux") {
         platform = "centos7"
@@ -95,14 +102,14 @@ try {
                 if (HOTFIX_TAG == "nightly") {
                     tag = "master"
                 } else {
-                    tag = ORIGIN_TAG
+                    tag = HOTFIX_TAG
                 }
 
                 if (TIDB_VERSION == "") {
                     TIDB_VERSION = HOTFIX_TAG
                 }
                 // After v4.0.11, we use br repo instead of br repo, and we should not maintain old version, if we indeed need, we can use the old version of this groovy file
-                lightning_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=br -version=${ORIGIN_TAG} -s=${FILE_SERVER_URL}").trim()
+                lightning_sha1 = get_hash(ORIGIN_TAG,"br")
             }
             if (ARCH_X86) {
                 stage("tiup release tidb-lightning linux amd64") {

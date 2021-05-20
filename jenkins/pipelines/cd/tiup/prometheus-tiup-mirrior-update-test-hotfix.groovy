@@ -1,3 +1,5 @@
+def RELEASE_BRANCH = "release-4.0"
+
 def checkoutTiCS(branch) {
     checkout(changelog: false, poll: true, scm: [
             $class                           : "GitSCM",
@@ -103,7 +105,7 @@ node("build_go1130") {
         }
 
         stage("Checkout tics") {
-            def tag = ORIGIN_TAG
+            def tag = HOTFIX_TAG
             if (tag == "nightly") {
                 tag = "master"
             }
@@ -111,6 +113,11 @@ node("build_go1130") {
                 checkoutTiCS(tag)
             }
         }
+
+        // temp force set tag to relase branch to get latest file from github
+        tag = RELEASE_BRANCH
+
+
         if (ARCH_X86) {
             stage("TiUP build prometheus on linux/amd64") {
                 update VERSION, "linux", "amd64"

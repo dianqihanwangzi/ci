@@ -7,6 +7,13 @@
 def ticdc_sha1, platform, tag
 def cdc_desc = "CDC is a change data capture tool for TiDB"
 
+def get_hash = { hash_or_branch, repo ->
+    if (hash_or_branch.length() == 40) {
+        return hash_or_branch
+    }
+    return sh(returnStdout: true, script: "python gethash.py -repo=${repo} -version=${hash_or_branch} -s=${FILE_SERVER_URL}").trim()
+}
+
 def download = { name, hash, os, arch ->
     if (os == "linux") {
         platform = "centos7"
@@ -74,7 +81,7 @@ node("build_go1130") {
                     tag = HOTFIX_TAG
                 }
 
-                ticdc_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=ticdc -version=${ORIGIN_TAG} -s=${FILE_SERVER_URL}").trim()
+                ticdc_sha1 = get_hash(ORIGIN_TAG,"ticdc")
             }
 
             if (ARCH_X86) {

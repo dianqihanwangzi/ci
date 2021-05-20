@@ -1,6 +1,13 @@
 def tiup_desc = ""
 def desc = "Dumpling is a CLI tool that helps you dump MySQL/TiDB data"
 
+def get_hash = { hash_or_branch, repo ->
+    if (hash_or_branch.length() == 40) {
+        return hash_or_branch
+    }
+    return sh(returnStdout: true, script: "python gethash.py -repo=${repo} -version=${hash_or_branch} -s=${FILE_SERVER_URL}").trim()
+}
+
 def dumpling_sha1, tarball_name, dir_name
 
 def download = { name, version, os, arch ->
@@ -96,8 +103,7 @@ node("build_go1130") {
                 } else {
                     tag = HOTFIX_TAG
                 }
-
-                dumpling_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=dumpling -version=${ORIGIN_TAG} -s=${FILE_SERVER_URL}").trim()
+                dumpling_sha1 = get_hash(ORIGIN_TAG,"dumpling")
             }
             if (ARCH_X86) {
                 stage("tiup release dumpling linux amd64") {
