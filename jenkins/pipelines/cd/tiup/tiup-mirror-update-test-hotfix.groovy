@@ -286,7 +286,7 @@ node("build_go1130") {
             }
             if (ARCH_X86) {
                 stage("TiUP build tidb on linux/amd64") {
-                     "tidb", HOTFIX_TAG, tidb_sha1, "linux", "amd64"
+                    update "tidb", HOTFIX_TAG, tidb_sha1, "linux", "amd64"
                     update "tidb-ctl", HOTFIX_TAG, tidb_ctl_sha1, "linux", "amd64"
                     update "tikv", HOTFIX_TAG, tikv_sha1, "linux", "amd64"
                     update "pd", HOTFIX_TAG, pd_sha1, "linux", "amd64"
