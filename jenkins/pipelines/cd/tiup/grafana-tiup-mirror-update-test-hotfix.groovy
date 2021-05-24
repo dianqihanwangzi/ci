@@ -42,54 +42,54 @@ def unpack = { version, os, arch ->
 }
 
 def pack = { version, os, arch ->
-    def tag = ORIGIN_TAG
+    def tag = HOTFIX_TAG
     if (tag == "nightly") {
         tag = "master"
     }
-
+    // use release branch to download config yaml because it was pre release and tag does not exist
     sh """
     cd "grafana-${version}"
     if [ ${tag} == "master" ] || [[ ${tag} > "v4" ]];then \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${tag}/metrics/grafana/tidb.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${tag}/metrics/grafana/tidb_summary.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${tag}/metrics/grafana/overview.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${tag}/metrics/grafana/tidb_runtime.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/pd/${tag}/metrics/grafana/pd.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${RELEASE_BRANCH}/metrics/grafana/tidb.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${RELEASE_BRANCH}/metrics/grafana/tidb_summary.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${RELEASE_BRANCH}/metrics/grafana/overview.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb/${RELEASE_BRANCH}/metrics/grafana/tidb_runtime.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/pd/${RELEASE_BRANCH}/metrics/grafana/pd.json || true; \
 
-    wget -qnc https://github.com/tikv/tikv/archive/${tag}.zip
-    unzip ${tag}.zip
-    rm -rf ${tag}.zip
+    wget -qnc https://github.com/tikv/tikv/archive/${RELEASE_BRANCH}.zip
+    unzip ${RELEASE_BRANCH}.zip
+    rm -rf ${RELEASE_BRANCH}.zip
     cp tikv-*/metrics/grafana/*.json .
     rm -rf tikv-*
 
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-binlog/${tag}/metrics/grafana/binlog.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/ticdc/${tag}/metrics/grafana/ticdc.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-binlog/${RELEASE_BRANCH}/metrics/grafana/binlog.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/ticdc/${RELEASE_BRANCH}/metrics/grafana/ticdc.json || true; \
     wget -qnc https://raw.githubusercontent.com/pingcap/monitoring/master/platform-monitoring/ansible/grafana/disk_performance.json || true; \
     wget -qnc https://raw.githubusercontent.com/pingcap/monitoring/master/platform-monitoring/ansible/grafana/blackbox_exporter.json || true; \
     wget -qnc https://raw.githubusercontent.com/pingcap/monitoring/master/platform-monitoring/ansible/grafana/node.json || true; \
     wget -qnc https://raw.githubusercontent.com/pingcap/monitoring/master/platform-monitoring/ansible/grafana/kafka.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/br/${tag}/metrics/grafana/lightning.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/br/${tag}/metrics/grafana/br.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/br/${RELEASE_BRANCH}/metrics/grafana/lightning.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/br/${RELEASE_BRANCH}/metrics/grafana/br.json || true; \
     cp ../metrics/grafana/* . || true; \
     else \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tidb.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tidb_summary.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/overview.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/pd.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tikv_summary.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tikv_details.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tikv_trouble_shooting.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/performance_read.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/performance_write.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/binlog.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/disk_performance.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/blackbox_exporter.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/node.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/kafka.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/lightning.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tiflash_proxy_summary.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tiflash_summary.json || true; \
-    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${tag}/scripts/tiflash_proxy_details.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tidb.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tidb_summary.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/overview.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/pd.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tikv_summary.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tikv_details.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tikv_trouble_shooting.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/performance_read.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/performance_write.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/binlog.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/disk_performance.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/blackbox_exporter.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/node.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/kafka.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/lightning.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tiflash_proxy_summary.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tiflash_summary.json || true; \
+    wget -qnc https://raw.githubusercontent.com/pingcap/tidb-ansible/${RELEASE_BRANCH}/scripts/tiflash_proxy_details.json || true; \
     fi
 
     cd ..
@@ -133,8 +133,6 @@ node("build_go1130") {
             }
         }
         
-        // temp force set tag to relase branch to get latest file from github
-        tag = RELEASE_BRANCH
 
         if (ARCH_X86) {
             stage("tiup build grafana on linux/amd64") {
