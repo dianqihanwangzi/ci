@@ -56,6 +56,7 @@ def build_upload = { product, hash, binary ->
             def repo = "git@github.com:pingcap/${product}.git"
             def workspace = WORKSPACE
             dir("${workspace}/go/src/github.com/pingcap/${product}") {
+                deleteDir()
                 try {
                     checkout changelog: false, poll: true, scm: [$class                           : 'GitSCM', branches: [[name: "${hash}"]],
                                                                  doGenerateSubmoduleConfigurations: false,
@@ -208,6 +209,7 @@ try {
                                 }
                                 def target = "tiflash-${RELEASE_TAG}-${os}-${arch}"
                                 def filepath = "builds/pingcap/tiflash/optimization/${RELEASE_TAG}/${TIFLASH_HASH}/centos7/tiflash-${os}-${arch}.tar.gz"
+                                deleteDir()
                                 try {
                                     checkout changelog: false, poll: true,
                                             scm: [$class      : 'GitSCM', branches: [[name: "${TIFLASH_HASH}"]], doGenerateSubmoduleConfigurations: false,
@@ -281,6 +283,7 @@ try {
                         branch =RELEASE_BRANCH
                     }
 
+                    deleteDir()
                     checkout changelog: false, poll: true,
                             scm: [$class      : 'GitSCM', branches: [[name: "${branch}"]], doGenerateSubmoduleConfigurations: false,
                                   extensions  : [[$class: 'CheckoutOption', timeout: 30],
@@ -323,6 +326,7 @@ try {
                     }
                     def target = "importer-${RELEASE_TAG}-${os}-${arch}"
                     def filepath = "builds/pingcap/importer/optimization/${IMPORTER_HASH}/centos7/importer-${os}-${arch}.tar.gz"
+                    deleteDir()
                     try {
                         checkout changelog: false, poll: true,
                                 scm: [$class      : 'GitSCM', branches: [[name: "${IMPORTER_HASH}"]], doGenerateSubmoduleConfigurations: false,

@@ -59,6 +59,7 @@ def build_upload = { product, hash, binary ->
             def repo = "git@github.com:pingcap/${product}.git"
             def workspace = WORKSPACE
             dir("${workspace}/go/src/github.com/pingcap/${product}") {
+                deleteDir()
                 try {
                     checkout changelog: false, poll: true,
                             scm: [$class: 'GitSCM', branches: [[name: "${hash}"]], doGenerateSubmoduleConfigurations: false,
@@ -214,6 +215,7 @@ try {
                             if (checkIfFileCacheExists("tiflash", TIFLASH_HASH, "tiflash")) {
                                 return
                             }
+                            deleteDir()
                             def target = "tiflash-${RELEASE_TAG}-${os}-${arch}"
                             def filepath = "builds/pingcap/tiflash/optimization/${RELEASE_TAG}/${TIFLASH_HASH}/darwin/tiflash.tar.gz"
                             retry(20) {
@@ -270,7 +272,7 @@ try {
                         if (RELEASE_BRANCH != null && RELEASE_BRANCH != "") {
                             branch =RELEASE_BRANCH
                         }
-
+                        deleteDir()
                         retry(20) {
                             if (sh(returnStatus: true, script: '[ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1') != 0) {
                                 deleteDir()
@@ -311,6 +313,7 @@ try {
                         }
                         def target = "importer-${RELEASE_TAG}-${os}-${arch}"
                         def filepath = "builds/pingcap/importer/optimization/${IMPORTER_HASH}/darwin/importer.tar.gz"
+                        deleteDir()
                         retry(20) {
                             if (sh(returnStatus: true, script: '[ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1') != 0) {
                                 deleteDir()
