@@ -1,4 +1,4 @@
-def RELEASE_BRANCH = "release-4.0"
+def RELEASE_BRANCH = "release-5.0"
 
 def checkoutTiCS(branch) {
     checkout(changelog: false, poll: true, scm: [
