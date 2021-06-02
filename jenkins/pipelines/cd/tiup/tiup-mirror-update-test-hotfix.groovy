@@ -11,6 +11,7 @@
 * @ARCH_ARM
 * @ARCH_X86
 * @ARCH_MAC
+* @RELEASE_BRANCH
 */
 
 def tidb_sha1, tikv_sha1, pd_sha1, tidb_ctl_sha1, tidb_binlog_sha1, platform, tag, tarball_name, tidb_version
@@ -412,6 +413,7 @@ node("build_go1130") {
                     string(name: "TIDB_VERSION", value: "${tidb_version}"),
                     string(name: "TIUP_MIRRORS", value: "${TIUP_MIRRORS}"),
                     string(name: "ORIGIN_TAG", value: "${TIFLASH_TAG}"),
+                    string(name: "RELEASE_BRANCH", value: "${RELEASE_BRANCH}"),
                     [$class: 'BooleanParameterValue', name: 'ARCH_X86', value: ARCH_X86],
                     [$class: 'BooleanParameterValue', name: 'ARCH_ARM', value: ARCH_ARM],
                     [$class: 'BooleanParameterValue', name: 'ARCH_MAC', value: ARCH_MAC],
@@ -426,6 +428,7 @@ node("build_go1130") {
                     string(name: "TIDB_VERSION", value: "${tidb_version}"),
                     string(name: "TIUP_MIRRORS", value: "${TIUP_MIRRORS}"),
                     string(name: "ORIGIN_TAG", value: "${TIFLASH_TAG}"),
+                    string(name: "RELEASE_BRANCH", value: "${RELEASE_BRANCH}"),
                     [$class: 'BooleanParameterValue', name: 'ARCH_X86', value: ARCH_X86],
                     [$class: 'BooleanParameterValue', name: 'ARCH_ARM', value: ARCH_ARM],
                     [$class: 'BooleanParameterValue', name: 'ARCH_MAC', value: ARCH_MAC],
