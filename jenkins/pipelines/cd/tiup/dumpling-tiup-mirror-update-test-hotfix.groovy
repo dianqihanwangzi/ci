@@ -105,17 +105,17 @@ node("build_go1130") {
                 }
                 dumpling_sha1 = get_hash(ORIGIN_TAG,"dumpling")
             }
-            if (ARCH_X86) {
+            if (env.ARCH_X86) {
                 stage("tiup release dumpling linux amd64") {
                     update "dumpling", HOTFIX_TAG, "linux", "amd64"
                 }
             }
-            if (ARCH_ARM) {
+            if (env.ARCH_ARM) {
                 stage("tiup release dumpling linux arm64") {
                     update "dumpling", HOTFIX_TAG, "linux", "arm64"
                 }
             }
-            if (ARCH_MAC) {
+            if (env.ARCH_MAC) {
                 stage("tiup release dumpling darwin amd64") {
                     update "dumpling", HOTFIX_TAG, "darwin", "amd64"
                 }

@@ -111,17 +111,17 @@ try {
                 // After v4.0.11, we use br repo instead of br repo, and we should not maintain old version, if we indeed need, we can use the old version of this groovy file
                 lightning_sha1 = get_hash(ORIGIN_TAG,"br")
             }
-            if (ARCH_X86) {
+            if (env.ARCH_X86) {
                 stage("tiup release tidb-lightning linux amd64") {
                     update "br", HOTFIX_TAG, "linux", "amd64"
                 }
             }
-            if (ARCH_ARM) {
+            if (env.ARCH_ARM) {
                 stage("tiup release tidb-lightning linux arm64") {
                     update "br", HOTFIX_TAG, "linux", "arm64"
                 }
             }
-            if (ARCH_MAC) {
+            if (env.ARCH_MAC) {
                 stage("tiup release tidb-lightning darwin amd64") {
                     update "br", HOTFIX_TAG, "darwin", "amd64"
                 }
