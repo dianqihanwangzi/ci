@@ -110,17 +110,17 @@ try {
 
                     importer_sha1 = get_hash(ORIGIN_TAG,"importer")
                 }
-                if (env.ARCH_X86) {
+                if (params.ARCH_X86) {
                     stage("tiup release tikv-importer linux amd64") {
                         update "importer", HOTFIX_TAG, "linux", "amd64"
                     }
                 }
-                if (env.ARCH_ARM) {
+                if (params.ARCH_ARM) {
                     stage("tiup release tikv-importer linux arm64") {
                         update "importer", HOTFIX_TAG, "linux", "arm64"
                     }
                 }
-                if (env.ARCH_MAC) {
+                if (params.ARCH_MAC) {
                     stage("tiup release tikv-importer darwin amd64") {
                         update "importer", HOTFIX_TAG, "darwin", "amd64"
                     }

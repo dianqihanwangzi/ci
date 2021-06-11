@@ -132,17 +132,17 @@ node("build_go1130") {
         }
         
 
-        if (env.ARCH_X86) {
+        if (params.ARCH_X86) {
             stage("tiup build grafana on linux/amd64") {
                 update VERSION, "linux", "amd64"
             }
         }
-        if (env.ARCH_ARM) {
+        if (params.ARCH_ARM) {
             stage("TiUP build grafana on linux/arm64") {
                 update VERSION, "linux", "arm64"
             }
         }
-        if (env.ARCH_MAC) {
+        if (params.ARCH_MAC) {
             stage("TiUP build grafana on darwin/amd64") {
                 update VERSION, "darwin", "amd64"
             }

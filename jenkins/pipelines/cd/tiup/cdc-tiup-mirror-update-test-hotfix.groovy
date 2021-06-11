@@ -84,17 +84,17 @@ node("build_go1130") {
                 ticdc_sha1 = get_hash(ORIGIN_TAG,"ticdc")
             }
 
-            if (env.ARCH_X86) {
+            if (params.ARCH_X86) {
                 stage("TiUP build cdc on linux/amd64") {
                     update "ticdc", HOTFIX_TAG, ticdc_sha1, "linux", "amd64"
                 }
             }
-            if (env.ARCH_ARM) {
+            if (params.ARCH_ARM) {
                 stage("TiUP build cdc on linux/arm64") {
                     update "ticdc", HOTFIX_TAG, ticdc_sha1, "linux", "arm64"
                 }
             }
-            if (env.ARCH_MAC) {
+            if (params.ARCH_MAC) {
                 stage("TiUP build cdc on darwin/amd64") {
                     update "ticdc", HOTFIX_TAG, ticdc_sha1, "darwin", "amd64"
                 }

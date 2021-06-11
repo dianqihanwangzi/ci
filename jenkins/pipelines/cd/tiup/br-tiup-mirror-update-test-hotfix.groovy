@@ -112,17 +112,17 @@ node("build_go1130") {
                 br_sha1 = get_hash(ORIGIN_TAG,"br")
             }
 
-            if (env.ARCH_X86) {
+            if (params.ARCH_X86) {
                 stage("tiup release br linux amd64") {
                     update "br", HOTFIX_TAG, "linux", "amd64"
                 }
             }
-            if (env.ARCH_ARM) {
+            if (params.ARCH_ARM) {
                 stage("tiup release br linux arm64") {
                     update "br", HOTFIX_TAG, "linux", "arm64"
                 }
             }
-            if (env.ARCH_MAC) {
+            if (params.ARCH_MAC) {
                 stage("tiup release br darwin amd64") {
                     update "br", HOTFIX_TAG, "darwin", "amd64"
                 }

@@ -121,17 +121,17 @@ node("build_go1130") {
                 tiflash_sha1 = get_hash(ORIGIN_TAG,"tics")
             }
 
-            if (env.ARCH_X86) {
+            if (params.ARCH_X86) {
                 stage("tiup release tiflash linux amd64") {
                     update "tiflash", HOTFIX_TAG, "linux", "amd64"
                 }
             }
-            if (env.ARCH_ARM && (HOTFIX_TAG >= "v4.0" || HOTFIX_TAG == "nightly")) {
+            if (params.ARCH_ARM && (HOTFIX_TAG >= "v4.0" || HOTFIX_TAG == "nightly")) {
                 stage("tiup release tiflash linux arm64") {
                     update "tiflash", HOTFIX_TAG, "linux", "arm64"
                 }
             }
-            if (env.ARCH_MAC) {
+            if (params.ARCH_MAC) {
                 stage("tiup release tiflash darwin amd64") {
                     update "tiflash", HOTFIX_TAG, "darwin", "amd64"
                 }
