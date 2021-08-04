@@ -55,29 +55,29 @@ try {
             println "${ws}"
             sh "curl -s ${FILE_SERVER_URL}/download/builds/pingcap/ee/gethash.py > gethash.py"
             if(PRE_RELEASE == "false") {
-                TIDB_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tidb -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
-                TIKV_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tikv -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
-                PD_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=pd -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
-                BINLOG_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tidb-binlog -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
-                LIGHTNING_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tidb-lightning -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
-                TOOLS_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tidb-tools -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                TIDB_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tidb -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                TIKV_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tikv -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                PD_HASH = sh(returnStdout: true, script: "python gethash.py -repo=pd -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                BINLOG_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tidb-binlog -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                LIGHTNING_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tidb-lightning -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                TOOLS_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tidb-tools -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
 
                 if(RELEASE_TAG == "nightly" || RELEASE_TAG >= "v4.0.0") {
-                    CDC_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=ticdc -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                    CDC_HASH = sh(returnStdout: true, script: "python gethash.py -repo=ticdc -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
                 }
 
                 if(RELEASE_TAG == "nightly" || RELEASE_TAG >= "v3.1.0") {
-                    BR_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=br -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                    BR_HASH = sh(returnStdout: true, script: "python gethash.py -repo=br -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
                 }
                 // importer default branch is release-5.0
                 if(RELEASE_TAG == "nightly") {
-                    IMPORTER_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=importer -version=release-5.0 -s=${FILE_SERVER_URL}").trim()
+                    IMPORTER_HASH = sh(returnStdout: true, script: "python gethash.py -repo=importer -version=release-5.0 -s=${FILE_SERVER_URL}").trim()
                 }else{
-                    IMPORTER_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=importer -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                    IMPORTER_HASH = sh(returnStdout: true, script: "python gethash.py -repo=importer -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
                 }
 
                 if(SKIP_TIFLASH == "false" && (RELEASE_TAG == "nightly" || RELEASE_TAG >= "v3.1.0")) {
-                    TIFLASH_HASH = sh(returnStdout: true, script: "/usr/local/bin/python gethash.py -repo=tics -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
+                    TIFLASH_HASH = sh(returnStdout: true, script: "python gethash.py -repo=tics -version=${RELEASE_TAG} -s=${FILE_SERVER_URL}").trim()
                 }
 
                 if(RELEASE_TAG == "nightly" || RELEASE_TAG >= "v4.0.2") {
