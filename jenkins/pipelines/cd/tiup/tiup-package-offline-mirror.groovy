@@ -41,10 +41,10 @@ def package_enterprise = { arch ->
     sh "curl -s ${FILE_SERVER_URL}/download/builds/pingcap/ee/gethash.py > gethash.py"
     def hashes = [:]
     hashes["tikv"] = "556783c314a9bfca36c818256182eeef364120d7"
-    hashes["pd"] = "8afd38d919ec727712a9518cc3ebdcab47b2fbcb"
+    hashes["pd"] = "9cd4a62484ffaa98e1cd8f9d6450f834ee00ea06"
     hashes["tidb"] = "7fcca3a84f958ac843799034642e20f341798be3"
     def os = "linux"
-    def dst = "yidb-community-server-" + VERSION + "-linux-" + arch
+    def dst = "yidb-enterprise-server-" + VERSION + "-linux-" + arch
     def descs = [
             "tidb": "TiDB is an open source distributed HTAP database compatible with the MySQL protocol",
             "tikv": "Distributed transactional key-value database, originally created to complement TiDB",
