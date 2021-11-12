@@ -22,7 +22,7 @@ def clone_package = { arch, dst ->
 }
 
 def package_community = { arch ->
-    def dst = "tidb-community-server-" + VERSION + "-linux-" + arch
+    def dst = "ubisql-server-" + VERSION + "-linux-" + arch
 
     clone_package(arch, dst)
     sh """
