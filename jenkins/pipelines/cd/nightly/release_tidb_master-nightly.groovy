@@ -74,7 +74,7 @@ catchError {
                     } else {
                         dumpling_sha1 = sh(returnStdout: true, script: "python gethash.py -repo=dumpling -version=${DUMPLING_VERSION} -s=${FILE_SERVER_URL}").trim()
                     }
-                    sh "curl ${FILE_SERVER_URL}/download/builds/pingcap/br/${TIDB_BR_VERSION}/${tidb_br_sha1}/centos7/br.tar.gz | tar xz"
+                    sh "curl ${FILE_SERVER_URL}/download/builds/pingcap/br/${tidb_br_sha1}/centos7/br.tar.gz | tar xz"
 
                     sh "curl ${FILE_SERVER_URL}/download/builds/pingcap/dumpling/${dumpling_sha1}/centos7/dumpling.tar.gz | tar xz"
                 }
